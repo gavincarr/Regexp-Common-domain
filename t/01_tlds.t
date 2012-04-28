@@ -17,8 +17,8 @@ my @tests = (
   'www.openfusion.com.au'           => [qw(au)],
   'duckduckgo.com, of course'       => [qw(com)],
   'openclipart.org <-- try this'    => [qw(org)],
-  'bit.ly, ur1.ca, and tinyurl.org are all url shorteners'
-                                    => [qw(ly ca org)],
+  'bit.ly, ur1.ca, and TINYURL.ORG are all url shorteners'
+                                    => [qw(ly ca ORG)],
 );
 
 my $it = natatime 2, @tests;

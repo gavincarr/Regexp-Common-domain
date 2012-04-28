@@ -25,10 +25,30 @@ my $TLDs = join '|', sort(tlds('gtld_open')), sort(tlds('gtld_restricted')), sor
 
 pattern
   name   => [ qw(domain tld) ],
-  create => "\\b(?k:$TLDs)" .
-            # must be followed by a non-domain character
+  create => # work break, open capture
+            "(?i)\\b(?k:" .
+            # TLD alternation
+            $TLDs .
+            # close capture
+            ")" .
+            # and must be followed by a non-domain character
             "(?:(?=$NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS)|\$)"
   ;
+
+pattern
+  name   => [ qw(domain hostname) ],
+  create => # word break, open capture
+            "(?i)\\b(?k:" .
+            # each subdomain element is a set of hostname characters, up to 64, followed by a dot
+            "(?:${HOSTNAME_CHARS_UNDERSCORE_CLASS}{1,64}\\.)+" .
+            # domains must terminate with a TLD
+            "(?:$TLDs)" .
+            # close capture
+            ")" .
+            # and must be followed by a non-domain character
+            "(?:(?=$NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS)|\$)"
+  ;
+
 
 1;
 
@@ -46,7 +66,8 @@ Version 0.01
 
     use Regexp::Common qw(domain);
 
-    @tlds = $text =~ m/$RE{domain}{tld}/og;
+    @tlds      = $text =~ m/$RE{domain}{tld}{-keep}/og;
+    @hostnames = $text =~ m/$RE{domain}{hostname}{-keep}/og;
 
 =head1 AUTHOR
 
