@@ -1,0 +1,27 @@
+---
+abstract: 'patterns for matching domains and hostnames'
+author:
+  - 'Gavin Carr, C<< <gavin at openfusion.com.au> >>'
+  - 'Gavin Carr <gavin@openfusion.com.au>'
+build_requires:
+  ExtUtils::MakeMaker: 6.42
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
+distribution_type: module
+generated_by: 'Module::Install version 1.00'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Regexp-Common-hostname
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  Net::Domain::TLD: 0
+  Regexp::Common: 0
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.01
