@@ -1,4 +1,4 @@
-package Regexp::Common::hostname;
+package Regexp::Common::domain;
 
 use warnings;
 use strict;
@@ -24,7 +24,7 @@ my $TLDs = join '|', sort(tlds('gtld_open')), sort(tlds('gtld_restricted')), sor
 # Pattern definitions
 
 pattern
-  name   => [ qw(hostname tld) ],
+  name   => [ qw(domain tld) ],
   create => "\\b(?k:$TLDs)" .
             # must be followed by a non-domain character
             "(?:(?=$NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS)|\$)"
@@ -36,7 +36,7 @@ __END__
 
 =head1 NAME
 
-Regexp::Common::hostname - patterns for matching domains and hostnames
+Regexp::Common::domain - patterns for matching domains and components
 
 =head1 VERSION
 
@@ -44,9 +44,9 @@ Version 0.01
 
 =head1 SYNOPSIS
 
-    use Regexp::Common qw(hostname);
+    use Regexp::Common qw(domain);
 
-    @tlds = $text =~ m/$RE{hostname}{tld}/og;
+    @tlds = $text =~ m/$RE{domain}{tld}/og;
 
 =head1 AUTHOR
 
@@ -55,8 +55,8 @@ Gavin Carr, C<< <gavin at openfusion.com.au> >>
 =head1 BUGS
 
 Please report any bugs or feature requests to 
-C<bug-regexp-common-hostname at rt.cpan.org>, or through the web interface
-at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Regexp-Common-hostname>.
+C<bug-regexp-common-domain at rt.cpan.org>, or through the web interface
+at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Regexp-Common-domain>.
 
 =head1 ACKNOWLEDGEMENTS
 

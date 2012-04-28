@@ -8,7 +8,7 @@ use List::MoreUtils qw(natatime);
 
 use FindBin qw($Bin);
 use lib "$Bin/../lib";
-use Regexp::Common qw(hostname);
+use Regexp::Common qw(domain);
 
 my @tests = (
   'www.google.com'                  => [qw(com)],
@@ -23,7 +23,7 @@ my @tests = (
 
 my $it = natatime 2, @tests;
 while (my ($text, $expected) = $it->()) {
-  my @got = $text =~ m/$RE{hostname}{tld}{-keep}/og;
+  my @got = $text =~ m/$RE{domain}{tld}{-keep}/og;
   cmp_deeply \@got, $expected, "$text ok";
 }
 

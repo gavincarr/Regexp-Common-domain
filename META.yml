@@ -1,5 +1,5 @@
 ---
-abstract: 'patterns for matching domains and hostnames'
+abstract: 'patterns for matching domains and components'
 author:
   - 'Gavin Carr, C<< <gavin at openfusion.com.au> >>'
   - 'Gavin Carr <gavin@openfusion.com.au>'
@@ -14,7 +14,7 @@ license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
-name: Regexp-Common-hostname
+name: Regexp-Common-domain
 no_index:
   directory:
     - inc

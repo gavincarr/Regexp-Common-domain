@@ -1,7 +1,7 @@
 use inc::Module::Install;
 
-name     'Regexp-Common-hostname';
-all_from 'lib/Regexp/Common/hostname.pm';
+name     'Regexp-Common-domain';
+all_from 'lib/Regexp/Common/domain.pm';
 author   q{Gavin Carr <gavin@openfusion.com.au>};
 license  'perl';
 
