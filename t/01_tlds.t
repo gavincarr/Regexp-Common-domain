@@ -19,6 +19,8 @@ my @tests = (
   'openclipart.org <-- try this'    => [qw(org)],
   'bit.ly, ur1.ca, and TINYURL.ORG are all url shorteners'
                                     => [qw(ly ca ORG)],
+  'xn--node, xn--3e0b707e, and xn--ygbi2ammx are IDN TLDs'
+                                    => [qw(xn--node xn--3e0b707e xn--ygbi2ammx)],
 );
 
 my $it = natatime 2, @tests;
