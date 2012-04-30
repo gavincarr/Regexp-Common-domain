@@ -3,9 +3,11 @@ package Regexp::Common::domain;
 use warnings;
 use strict;
 use Regexp::Common qw(pattern);
-use Net::Domain::TLD qw(tlds);
+#use Net::Domain::TLD qw(tlds);
+use Domain::PublicSuffix;
+use Net::LibIDN qw(idn_to_ascii);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 my $HOSTNAME_CHARS = "a-zA-Z0-9-";
 my $HOSTNAME_CHARS_CLASS = "[$HOSTNAME_CHARS]";
@@ -18,11 +20,24 @@ my $NON_HOSTNAME_CHARS_DOT_CLASS = "[^.$HOSTNAME_CHARS]";
 my $NON_HOSTNAME_CHARS_UNDERSCORE_CLASS = "[^_$HOSTNAME_CHARS]";
 my $NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS = "[^_.$HOSTNAME_CHARS]";
 
-my $TLDs = join '|', sort(tlds('gtld_open')),
-                     sort(tlds('gtld_restricted')),
-                     sort(tlds('new_open')),
-                     sort(tlds('new_restricted')),
-                     sort(tlds('cc'));
+# TLDs via Net::Domain::TLD (seems to omit new IDN TLDs)
+#my $TLDs = join '|', sort(tlds('gtld_open')),
+#                     sort(tlds('gtld_restricted')),
+#                     sort(tlds('new_open')),
+#                     sort(tlds('new_restricted')),
+#                     sort(tlds('cc'));
+ 
+# TLDs via Domain::PublicSuffix
+my $dps = Domain::PublicSuffix->new;
+my %tld = map { $_ => [] } qw(2 3 4);
+
+for (sort map { idn_to_ascii($_, "utf-8") } keys %{$dps->tld_tree}) {
+  # Categorise TLDs by length
+  my $len = length $_;
+  $len = 4 if $len > 4;
+  push @{$tld{$len}}, $_;
+}
+my $TLDs = join '|', @{$tld{3}}, @{$tld{4}}, @{$tld{2}};
 
 # -------------------------------------------------------------------------
 # Pattern definitions

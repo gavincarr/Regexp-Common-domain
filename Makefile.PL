@@ -8,7 +8,9 @@ license  'perl';
 build_requires 'Test::More';
 
 requires 'Regexp::Common';
-requires 'Net::Domain::TLD';
+#requires 'Net::Domain::TLD';
+requires 'Domain::PublicSuffix';
+requires 'Net::LibIDN';
 
 auto_install;
 
