@@ -21,6 +21,7 @@ my @tests = (
                                     => [qw(bit.ly ur1.ca TINYURL.ORG)],
   'http://www.example.com:8080/abc/index.html'
                                     => [qw(www.example.com)],
+  '24x7.medguru.info' =>            => [qw(24x7.medguru.info)],
 );
 
 my $it = natatime 2, @tests;

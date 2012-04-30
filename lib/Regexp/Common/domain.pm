@@ -5,7 +5,7 @@ use strict;
 use Regexp::Common qw(pattern);
 use Net::Domain::TLD qw(tlds);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 my $HOSTNAME_CHARS = "a-zA-Z0-9-";
 my $HOSTNAME_CHARS_CLASS = "[$HOSTNAME_CHARS]";
@@ -18,7 +18,11 @@ my $NON_HOSTNAME_CHARS_DOT_CLASS = "[^.$HOSTNAME_CHARS]";
 my $NON_HOSTNAME_CHARS_UNDERSCORE_CLASS = "[^_$HOSTNAME_CHARS]";
 my $NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS = "[^_.$HOSTNAME_CHARS]";
 
-my $TLDs = join '|', sort(tlds('gtld_open')), sort(tlds('gtld_restricted')), sort(tlds('cc'));
+my $TLDs = join '|', sort(tlds('gtld_open')),
+                     sort(tlds('gtld_restricted')),
+                     sort(tlds('new_open')),
+                     sort(tlds('new_restricted')),
+                     sort(tlds('cc'));
 
 # -------------------------------------------------------------------------
 # Pattern definitions
@@ -60,7 +64,7 @@ Regexp::Common::domain - patterns for matching domains and components
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =head1 SYNOPSIS
 
