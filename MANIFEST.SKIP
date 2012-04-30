@@ -6,3 +6,4 @@
 ^MYMETA
 ^domain.pm$
 ^\.gitignore$
+^tmp/
