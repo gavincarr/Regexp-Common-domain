@@ -79,7 +79,7 @@ Regexp::Common::domain - patterns for matching domains and components
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 SYNOPSIS
 
@@ -90,7 +90,7 @@ Version 0.02
 
 =head1 AUTHOR
 
-Gavin Carr, C<< <gavin at openfusion.com.au> >>
+Gavin Carr <gavin@openfusion.com.au>
 
 =head1 BUGS
 

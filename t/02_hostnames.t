@@ -19,7 +19,7 @@ my @tests = (
   'RT openclipart.org <-- try this' => [qw(openclipart.org)],
   'bit.ly, ur1.ca, and TINYURL.ORG are all url shorteners'
                                     => [qw(bit.ly ur1.ca TINYURL.ORG)],
-  'http://www.example.com:8080/abc/index.html'
+  'http://www.example.com:8080/abc/index.html#fragment?foo=1&bar=2'
                                     => [qw(www.example.com)],
   '24x7.medguru.info'               => [qw(24x7.medguru.info)],
   'www.example.kp'                  => [qw(www.example.kp)],

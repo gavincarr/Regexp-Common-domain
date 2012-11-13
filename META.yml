@@ -1,7 +1,6 @@
 ---
 abstract: 'patterns for matching domains and components'
 author:
-  - 'Gavin Carr, C<< <gavin at openfusion.com.au> >>'
   - 'Gavin Carr <gavin@openfusion.com.au>'
 build_requires:
   ExtUtils::MakeMaker: 6.42
