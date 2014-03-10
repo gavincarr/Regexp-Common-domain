@@ -7,7 +7,7 @@ use Regexp::Common qw(pattern);
 use Domain::PublicSuffix;
 use Net::LibIDN qw(idn_to_ascii);
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 my $HOSTNAME_CHARS = "a-zA-Z0-9-";
 my $HOSTNAME_CHARS_CLASS = "[$HOSTNAME_CHARS]";
@@ -79,7 +79,7 @@ Regexp::Common::domain - patterns for matching domains and components
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =head1 SYNOPSIS
 
