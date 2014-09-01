@@ -1,5 +1,8 @@
 .*.sw?
 *~
+Regexp-Common*
+.build
+t/*.txt
 blib*
 inc
 pm_to_blib*
