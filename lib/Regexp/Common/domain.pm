@@ -3,11 +3,12 @@ package Regexp::Common::domain;
 use warnings;
 use strict;
 use Regexp::Common qw(pattern);
-#use Net::Domain::TLD qw(tlds);
-use Domain::PublicSuffix;
+use Net::Domain::TLD 1.72 ();
+use Domain::PublicSuffix 0.09;
 use Net::LibIDN qw(idn_to_ascii);
+use List::MoreUtils qw(uniq);
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 my $HOSTNAME_CHARS = "a-zA-Z0-9-";
 my $HOSTNAME_CHARS_CLASS = "[$HOSTNAME_CHARS]";
@@ -20,12 +21,6 @@ my $NON_HOSTNAME_CHARS_DOT_CLASS = "[^.$HOSTNAME_CHARS]";
 my $NON_HOSTNAME_CHARS_UNDERSCORE_CLASS = "[^_$HOSTNAME_CHARS]";
 my $NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS = "[^_.$HOSTNAME_CHARS]";
 
-# TLDs via Net::Domain::TLD (seems to omit new IDN TLDs)
-#my $TLDs = join '|', sort(tlds('gtld_open')),
-#                     sort(tlds('gtld_restricted')),
-#                     sort(tlds('new_open')),
-#                     sort(tlds('new_restricted')),
-#                     sort(tlds('cc'));
  
 # TLDs via Domain::PublicSuffix
 my $dps = Domain::PublicSuffix->new;
@@ -37,7 +32,9 @@ for (sort map { idn_to_ascii($_, "utf-8") } keys %{$dps->tld_tree}) {
   $len = 4 if $len > 4;
   push @{$tld{$len}}, $_;
 }
-my $TLDs = join '|', @{$tld{3}}, @{$tld{4}}, @{$tld{2}};
+
+my $TLDs = join '|', uniq(Net::Domain::TLD::tlds(), @{$tld{3}}, @{$tld{4}}, @{$tld{2}});
+
 
 # -------------------------------------------------------------------------
 # Pattern definitions
@@ -50,7 +47,7 @@ pattern
             $TLDs .
             # close capture
             ")" .
-            # and must be followed by a non-domain character
+            # and must be followed by a non-domain character (or end-of-string)
             "(?:(?=$NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS)|\$)"
   ;
 
@@ -64,7 +61,7 @@ pattern
             "(?:$TLDs)" .
             # close capture
             ")" .
-            # and must be followed by a non-domain character
+            # and must be followed by a non-domain character (or end-of-string)
             "(?:(?=$NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS)|\$)"
   ;
 
@@ -75,11 +72,11 @@ __END__
 
 =head1 NAME
 
-Regexp::Common::domain - patterns for matching domains and components
+Regexp::Common::domain - patterns for matching DNS domains and TLDs
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =head1 SYNOPSIS
 
@@ -87,6 +84,56 @@ Version 0.04
 
     @tlds      = $text =~ m/$RE{domain}{tld}{-keep}/og;
     @hostnames = $text =~ m/$RE{domain}{hostname}{-keep}/og;
+
+=head1 DESCRIPTION
+
+Please see L<Regexp::Common> for a general description of the $RE
+inteface. You do not load it directly, but via Regexp::Common, as in the
+C<use> statement in the SYNOPSIS.
+
+This module provides regular expressions for matching and capturing
+domains/hostnames and top-level-domains (TLDs) used by the Domain
+Name System.
+
+=over 4
+
+=item $RE{domain}{tld}
+
+Returns a pattern that matches any TLD defined in L<Net::Domain::TLD> or
+L<Domain::PublicSuffix> (since neither seem exhaustive alone).
+
+To capture the TLDs matched, use the standard Regexp::Common {-keep} option
+e.g.
+
+    @tlds = $text =~ m/$RE{domain}{tld}{-keep}/og;
+
+This pattern begins and ends with a \b word-break pattern, and is
+case-insensitive. 
+
+If you don't want to match standalone TLDs (which now include many ordinary
+words e.g. agency associates autos beer best bike etc.) you should anchor
+the pattern e.g. with a dot in a zero-length lookbehind assertion i.e.
+
+    @tlds = $text =~ m/ (?<=\.) $RE{domain}{tld}{-keep}/ogx;
+
+=item $RE{domain}{hostname}
+
+Returns a pattern that matches a domain/hostname string i.e. a sequence of
+valid domain-labels, joined by dots, terminating in a TLD.
+
+To capture the hostnames matched, use the standard Regexp::Common {-keep} option
+e.g.
+
+    @hostnames = $text =~ m/$RE{domain}{hostname}{-keep}/og;
+
+This pattern begins and ends with a \b word-break pattern, and is
+case-insensitive. 
+
+=back
+
+=head1 SEE ALSO
+
+L<Regexp::Common>, L<Domain::PublicSuffix>, L<Net::Domain::TLD>
 
 =head1 AUTHOR
 
@@ -98,13 +145,9 @@ Please report any bugs or feature requests to
 C<bug-regexp-common-domain at rt.cpan.org>, or through the web interface
 at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Regexp-Common-domain>.
 
-=head1 ACKNOWLEDGEMENTS
-
-L<Regexp::Common>
-
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2012 Gavin Carr.
+Copyright 2012-2014 Gavin Carr.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published
@@ -113,4 +156,3 @@ by the Free Software Foundation; or the Artistic License.
 See http://dev.perl.org/licenses/ for more information.
 
 =cut
-
