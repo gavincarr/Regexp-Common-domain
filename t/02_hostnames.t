@@ -5,9 +5,6 @@ use Test::More;
 use Test::Deep;
 use Data::Dump qw(pp);
 use List::MoreUtils qw(natatime);
-
-use FindBin qw($Bin);
-use lib "$Bin/../lib";
 use Regexp::Common qw(domain);
 
 my @tests = (
