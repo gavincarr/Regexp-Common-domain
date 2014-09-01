@@ -72,7 +72,7 @@ __END__
 
 =head1 NAME
 
-Regexp::Common::domain - patterns for matching DNS domains and TLDs
+Regexp::Common::domain - Patterns for matching DNS domains and TLDs
 
 =head1 VERSION
 
