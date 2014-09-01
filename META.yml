@@ -1,14 +1,16 @@
 ---
-abstract: 'patterns for matching domains and components'
+abstract: 'patterns for matching DNS domains and TLDs'
 author:
   - 'Gavin Carr <gavin@openfusion.com.au>'
 build_requires:
-  ExtUtils::MakeMaker: 6.42
+  ExtUtils::MakeMaker: 6.36
+  Test::Deep: 0
   Test::More: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.42
+  ExtUtils::MakeMaker: 6.36
 distribution_type: module
-generated_by: 'Module::Install version 1.00'
+dynamic_config: 1
+generated_by: 'Module::Install version 1.10'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,9 +21,11 @@ no_index:
     - inc
     - t
 requires:
-  Domain::PublicSuffix: 0
+  Domain::PublicSuffix: 0.09
+  Net::Domain::TLD: 1.72
   Net::LibIDN: 0
   Regexp::Common: 0
+  List::MoreUtils: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.03
+version: 0.05
