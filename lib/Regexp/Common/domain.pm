@@ -8,8 +8,6 @@ use Domain::PublicSuffix 0.09;
 use Net::LibIDN qw(idn_to_ascii);
 use List::MoreUtils qw(uniq);
 
-our $VERSION = '0.05';
-
 my $HOSTNAME_CHARS = "a-zA-Z0-9-";
 my $HOSTNAME_CHARS_CLASS = "[$HOSTNAME_CHARS]";
 my $HOSTNAME_CHARS_DOT_CLASS = "[.$HOSTNAME_CHARS]";
@@ -74,10 +72,6 @@ __END__
 
 Regexp::Common::domain - Patterns for matching DNS domains and TLDs
 
-=head1 VERSION
-
-Version 0.05
-
 =head1 SYNOPSIS
 
     use Regexp::Common qw(domain);
@@ -138,12 +132,6 @@ L<Regexp::Common>, L<Domain::PublicSuffix>, L<Net::Domain::TLD>
 =head1 AUTHOR
 
 Gavin Carr <gavin@openfusion.com.au>
-
-=head1 BUGS
-
-Please report any bugs or feature requests to 
-C<bug-regexp-common-domain at rt.cpan.org>, or through the web interface
-at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Regexp-Common-domain>.
 
 =head1 LICENSE AND COPYRIGHT
 
