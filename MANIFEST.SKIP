@@ -1,9 +1,0 @@
-^\.git/
-^blib/
-^Makefile$
-\.old$
-\.bak$
-^MYMETA
-^domain.pm$
-^\.gitignore$
-^tmp/
