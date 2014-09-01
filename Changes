@@ -1,0 +1,33 @@
+ChangeLog
+---------
+
+[2014-09-01]
+* Bump version to 0.05.
+* Add an initial dzil dist.ini config.
+* Remove lots of stuff in move to dzil.
+* Remove M::I inc from repo.
+* Update META.yml.
+* Add Net::Domain::TLD TLDs to TLD regex; update perldocs.
+* Tweaks to unit tests; add some new TLDs to 01_tlds.t.
+
+[2013-03-26]
+* Bump version to 0.04.
+* Add Test::Deep test dependency to Makefile.PL.
+
+[2012-11-13]
+* Various minor tweaks.
+
+[2012-04-30]
+* Bump version to 0.02.
+* Add a check for IDN TLD handling.
+* Change from using Net::Domain::TLD to Domain::PublicSuffix for TLDs.
+* Add a bunch of newer/obscure TLDs to t/02_hostnames.t.
+* Add .gitignore to MANIFEST.SKIP.
+* Add missing new_{open,restricted} tlds.
+* Remove ignore.txt; add MANIFEST.SKIP.
+
+[2012-04-28]
+* Add initial 'hostname' regex to Regexp::Common::domain.
+* Rename to Regexp::Common::domain.
+* Initial import.
+
