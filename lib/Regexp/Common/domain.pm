@@ -4,8 +4,7 @@ use warnings;
 use strict;
 use Regexp::Common qw(pattern);
 use Net::Domain::TLD 1.72 ();
-use Domain::PublicSuffix 0.09;
-use Net::LibIDN qw(idn_to_ascii);
+use Domain::PublicSuffix 0.14;
 use List::MoreUtils qw(uniq);
 
 my $HOSTNAME_CHARS = "a-zA-Z0-9-";
@@ -19,27 +18,23 @@ my $NON_HOSTNAME_CHARS_DOT_CLASS = "[^.$HOSTNAME_CHARS]";
 my $NON_HOSTNAME_CHARS_UNDERSCORE_CLASS = "[^_$HOSTNAME_CHARS]";
 my $NON_HOSTNAME_CHARS_UNDERSCORE_DOT_CLASS = "[^_.$HOSTNAME_CHARS]";
 
- 
-# TLDs via Domain::PublicSuffix
+# Uniquify and sort TLDs by reverse length, and regexp-escape TLDs that are not \w+
 my $dps = Domain::PublicSuffix->new;
-my %tld = map { $_ => [] } qw(2 3 4);
-
-for (sort map { idn_to_ascii($_, "utf-8") } keys %{$dps->tld_tree}) {
-  # Categorise TLDs by length
-  my $len = length $_;
-  $len = 4 if $len > 4;
-  push @{$tld{$len}}, $_;
-}
-
-my $TLDs = join '|', uniq(Net::Domain::TLD::tlds(), @{$tld{3}}, @{$tld{4}}, @{$tld{2}});
-
+my @TLD =
+          map { /\W/ ? "\Q$_\E" : $_ }
+          sort { length $b <=> length $a || $a cmp $b }
+          uniq(
+              Net::Domain::TLD::tlds(),
+              keys %{$dps->tld_tree},
+          );
+my $TLDs = join '|', @TLD;
 
 # -------------------------------------------------------------------------
 # Pattern definitions
 
 pattern
   name   => [ qw(domain tld) ],
-  create => # work break, open capture
+  create => # case-insensitive, word break, open capture
             "(?i)\\b(?k:" .
             # TLD alternation
             $TLDs .
@@ -51,12 +46,14 @@ pattern
 
 pattern
   name   => [ qw(domain hostname) ],
-  create => # word break, open capture
+  create => # case-insensitive, word break, open capture
             "(?i)\\b(?k:" .
-            # each subdomain element is a set of hostname characters, up to 64, followed by a dot
-            "(?:${HOSTNAME_CHARS_UNDERSCORE_CLASS}{1,64}\\.)+" .
+            # each subdomain element is a set of hostname characters, up to 63, followed by a dot
+            "(?:${HOSTNAME_CHARS_UNDERSCORE_CLASS}{1,63}\\.)+" .
             # domains must terminate with a TLD
             "(?:$TLDs)" .
+            # optional final dot
+            "\\.?" .
             # close capture
             ")" .
             # and must be followed by a non-domain character (or end-of-string)
