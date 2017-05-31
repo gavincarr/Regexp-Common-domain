@@ -1,6 +1,8 @@
 # Test tld extraction
 
+use utf8;
 use strict;
+use warnings;
 use Test::More;
 use Test::Deep;
 use Data::Dump qw(pp);
@@ -8,12 +10,12 @@ use List::MoreUtils qw(natatime);
 use Regexp::Common qw(domain);
 
 my @bare_tests = (
-  'www.google.com'                  => [qw(com)],
-  'www.flickr.net'                  => [qw(net)],
-  'www.amazon.co.uk'                => [qw(uk)],
-  'www.openfusion.com.au'           => [qw(au)],
-  'duckduckgo.com, of course'       => [qw(com)],
-  'openclipart.org <-- try this'    => [qw(org)],
+  'www.google.com'                  => 'com',
+  'www.flickr.net'                  => 'net',
+  'www.amazon.co.uk'                => 'uk',
+  'www.openfusion.com.au'           => 'au',
+  'duckduckgo.com, of course'       => 'com',
+  'openclipart.org <-- try this'    => 'org',
   'bit.ly, ur1.ca, and TINYURL.ORG are all url shorteners'
                                     => [qw(ly ca ORG)],
   'xn--node, xn--3e0b707e, and xn--ygbi2ammx are IDN TLDs'
@@ -44,15 +46,25 @@ my @anchored_tests = (
 my $it = natatime 2, @bare_tests;
 while (my ($text, $expected) = $it->()) {
   my @got = $text =~ m/$RE{domain}{tld}{-keep}/og;
-  cmp_deeply \@got, $expected, "$text ok"
-    or pp \@got;
+  if (ref $expected) {
+    cmp_deeply \@got, $expected, "$text ok"
+      or pp \@got;
+  }
+  else {
+    is($got[0], $expected, "$text ok");
+  }
 }
 
-my $it = natatime 2, @anchored_tests;
+$it = natatime 2, @anchored_tests;
 while (my ($text, $expected) = $it->()) {
   my @got = $text =~ m/ (?<=\.) $RE{domain}{tld}{-keep}/ogx;
-  cmp_deeply \@got, $expected, "$text ok"
-    or pp \@got;
+  if (ref $expected) {
+    cmp_deeply \@got, $expected, "$text ok"
+      or pp \@got;
+  }
+  else {
+    is($got[0], $expected, "$text ok");
+  }
 }
 
 done_testing;
