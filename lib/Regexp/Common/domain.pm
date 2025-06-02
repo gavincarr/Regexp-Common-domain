@@ -78,9 +78,9 @@ Regexp::Common::domain - Patterns for matching DNS domains and TLDs
 
 =head1 DESCRIPTION
 
-Please see L<Regexp::Common> for a general description of the $RE
-inteface. You do not load it directly, but via Regexp::Common, as in the
-C<use> statement in the SYNOPSIS.
+Please see L<Regexp::Common>
+for a general description of the $RE interface. You do not load it directly,
+but via Regexp::Common, as in the C<use> statement in the SYNOPSIS.
 
 This module provides regular expressions for matching and capturing
 domains/hostnames and top-level-domains (TLDs) used by the Domain
@@ -128,11 +128,11 @@ L<Regexp::Common>, L<Domain::PublicSuffix>, L<Net::Domain::TLD>
 
 =head1 AUTHOR
 
-Gavin Carr <gavin@openfusion.com.au>
+Gavin Carr <gavin@openfusion.net>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2012-2014 Gavin Carr.
+Copyright 2012-2025 Gavin Carr.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published
