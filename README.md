@@ -57,7 +57,7 @@ Name System.
 
 # AUTHOR
 
-Gavin Carr <cervlean@gmail.com>
+Gavin Carr <gavin@openfusion.net>
 
 # LICENSE AND COPYRIGHT
 
