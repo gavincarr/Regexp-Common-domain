@@ -1,0 +1,29 @@
+Source: libregexp-common-domain-perl
+Maintainer: Gavin Carr <gavin@openfusion.net>
+Section: perl
+Priority: optional
+Build-Depends: debhelper-compat (= 13)
+Build-Depends-Indep: libdata-dump-perl <!nocheck>,
+                     libdomain-publicsuffix-perl <!nocheck>,
+                     liblist-moreutils-perl <!nocheck>,
+                     libnet-domain-tld-perl <!nocheck>,
+                     libnet-idn-encode-perl <!nocheck>,
+                     libregexp-common-perl <!nocheck>,
+                     libtest-deep-perl <!nocheck>,
+                     libtest-simple-perl <!nocheck>,
+                     perl
+Standards-Version: 4.6.0
+Homepage: https://metacpan.org/release/Regexp-Common-domain
+Rules-Requires-Root: no
+
+Package: libregexp-common-domain-perl
+Architecture: all
+Depends: ${misc:Depends},
+         ${perl:Depends},
+         libdomain-publicsuffix-perl,
+         liblist-moreutils-perl,
+         libnet-domain-tld-perl,
+         libregexp-common-perl
+Description: Regexp::Common::domain provides regular expressions for matching and
+ capturing domains/hostnames and top-level-domains (TLDs) used by the Domain
+ Name System.
